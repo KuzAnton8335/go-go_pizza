@@ -1,0 +1,26 @@
+.modal {
+  position: fixed;
+  z-index: 45;
+  inset: 0;
+  background: rgba(44, 40, 38, 0.89);
+  cursor: pointer;
+  padding: 30px 14px;
+  overflow-y: auto;
+}
+.modal-pizza {
+  display: none;
+}
+.modal__main {
+  position: relative;
+  cursor: default;
+  background: var(--white);
+  border-radius: 32px;
+  margin: auto;
+}
+
+.modal__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+

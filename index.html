@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GO GO Pizza - Заказать лучшую пиццу в городе</title>
+  <link rel="stylesheet" href="css/normalaiz.css">
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/toppings.css">
+  <link rel="stylesheet" href="css/pizza.css">
+  <link rel="stylesheet" href="css/card.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/modal-pizza.css">
+  <link rel="stylesheet" href="css/preloader.css">
+
+  <script src="js/script.js" type="module"></script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container header__container">
+      <img src="img/logo.svg" alt="Логотип GO GO Pizza" class="header__logo">
+      <button class="header__cart" aria-label="кнопка для открытия корзины">
+        <svg width="20.000000" height="20.000000" viewBox="0 0 20 20" fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <rect id="bag 1" width="20.000000" height="20.000000" fill="currentColor" fill-opacity="0" />
+          <path id="Vector"
+            d="M10.24 19.99L4.1 20C3.52 19.99 3.02 19.6 3 18.93L3 5.94C3 5.86 2.99 5.78 3.01 5.71L3.02 5.69C3.17 5.25 3.43 5.2 3.79 5.19L6.58 5.2C6.68 5.2 6.74 5.24 6.74 5.11L6.74 4.08C6.74 3.8 6.72 3.5 6.75 3.22C6.9 1.45 8.17 0.16 9.76 0.01L9.78 0C9.98 0 10.2 -0.02 10.4 0.01C11.8 0.17 12.9 1.39 13.17 2.87C13.24 3.25 13.24 3.59 13.24 3.97L13.24 5.19C13.3 5.2 13.38 5.2 13.44 5.2L16.13 5.19C16.5 5.19 16.86 5.22 16.97 5.71L16.98 5.73C17.01 5.86 16.99 6.02 16.99 6.16L16.99 18.99C16.97 19.37 16.71 19.73 16.41 19.89C16.2 19.99 16.01 19.99 15.79 19.99L10.24 19.99ZM9.86 1.83C9.13 1.92 8.56 2.5 8.43 3.29C8.4 3.49 8.42 3.72 8.42 3.93L8.42 5.19L10.16 5.19L11.55 5.19L11.55 3.56C11.55 2.53 10.82 1.76 9.86 1.83ZM7.38 7.52C6.04 7.64 6.15 9.73 7.49 9.7C8.86 9.52 8.61 7.42 7.38 7.52ZM12.52 7.53C11.18 7.69 11.31 9.74 12.65 9.7C13.97 9.53 13.86 7.45 12.52 7.53Z"
+            fill="currentColor" fill-opacity="1.000000" fill-rule="nonzero" />
+        </svg>
+      </button>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="container hero__container">
+        <div class="hero__content">
+          <h1 class="hero__title">Лучшая пицца
+            в&nbsp; городе</h1>
+          <p class="hero__tigline">
+            Доставим менее чем за&nbsp; час
+          </p>
+          <button class="hero__order">Заказать</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="toppings">
+      <div class="container">
+        <h2 class="toppings__title">Выбрать топпинг:</h2>
+        <button class="toppings__button"><span>Выбрать топпинг</span>
+          <svg class="toppings__arrow" width="20.000000" height="20.000000" viewBox="0 0 20 20" fill="none"
+            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path id="Polygon 2" d="M10 14.5L4.8 5.5L15.19 5.5L10 14.5Z" fill="currentColor" fill-opacity="1.000000"
+              fill-rule="evenodd" />
+          </svg>
+        </button>
+        <form class="toppings__form" id="toppings">
+          <ul class="toppings__list">
+            <!-- <li class="toppings__item">
+              <input type="checkbox" class="toppings__checkbox" name="topping" value="Твердый сыр" id="1">
+              <label class="toppings__label" for="1">
+                Твердый сыр
+              </label>
+            </li>
+            <li class="toppings__item">
+              <input type="checkbox" class="toppings__checkbox" name="topping" value="Моцарелла" id="2">
+              <label class="toppings__label" for="2">
+                Моцарелла
+              </label>
+            </li>
+            <li class="toppings__item">
+              <input type="checkbox" class="toppings__checkbox" name="topping" value="Сыр с плесенью" id="3">
+              <label class="toppings__label" for="3">
+                Сыр с плесенью
+              </label>
+            </li>
+            <li class="toppings__item">
+              <input type="checkbox" class="toppings__checkbox" name="topping" value="Пепперони" id="4">
+              <label class="toppings__label" for="4">
+                Пепперони
+              </label>
+            </li>
+            <li class="toppings__item">
+              <input type="checkbox" class="toppings__checkbox" name="topping" value="Ветчина" id="5">
+              <label class="toppings__label" for="5">
+                Ветчина
+              </label>
+            </li>
+            <li class="toppings__item">
+              <input type="checkbox" class="toppings__checkbox" name="topping" value="Курица" id="6">
+              <label class="toppings__label" for="6">
+                Курица
+              </label>
+            </li>
+            <li class="toppings__item">
+              <input type="checkbox" class="toppings__checkbox" name="topping" value="Креветки" id="7">
+              <label class="toppings__label" for="7">
+                Креветки
+              </label>
+            </li>
+            <li class="toppings__item">
+              <input type="checkbox" class="toppings__checkbox" name="topping" value="Помидор" id="8">
+              <label class="toppings__label" for="8">
+                Помидор
+              </label>
+            </li>
+            <li class="toppings__item">
+              <input type="checkbox" class="toppings__checkbox" name="topping" value="Болгарский перец" id="9">
+              <label class="toppings__label" for="9">
+                Болгарский перец
+              </label>
+            </li>
+            <li class="toppings__item">
+              <input type="checkbox" class="toppings__checkbox" name="topping" value="Ананас" id="10">
+              <label class="toppings__label" for="10">
+                Ананас
+              </label>
+            </li>
+            <li class="toppings__item">
+              <input type="checkbox" class="toppings__checkbox" name="topping" value="Лук" id="11">
+              <label class="toppings__label" for="11">
+                Лук
+              </label>
+            </li>
+            <li class="toppings__item">
+              <input type="checkbox" class="toppings__checkbox" name="topping" value="Грибы" id="12">
+              <label class="toppings__label" for="12">
+                Грибы
+              </label>
+            </li> -->
+          </ul>
+        </form>
+      </div>
+    </section>
+
+    <section class="pizza">
+      <div class="container">
+        <h2 class="pizza__title">Пицца</h2>
+        <ul class="pizza__list">
+          <!-- <li class="pizza__item">
+						<article class="pizza__card card">
+							<img class="card__image" src="img/pizza-img/pizza-margherita.png" alt="Маргарита">
+
+							<div class="card__content">
+								<h3 class="card__title">Маргарита</h3>
+								<p class="card__info">
+									<span class="card__price">480 ₽</span>
+									<span>/</span>
+									<span class="card__weight">25 см</span>
+								</p>
+								<button class="card__button">Выбрать</button>
+							</div>
+
+						</article>
+					</li>
+					<li class="pizza__item">
+						<article class="card">
+							<img class="card__image" src="img/pizza-img/pizza-margherita.png" alt="Маргарита">
+
+							<div class="card__content">
+								<h3 class="card__title">Маргарита</h3>
+								<p class="card__info">
+									<span class="card__price">480 ₽</span>
+									<span>/</span>
+									<span class="card__weight">25 см</span>
+								</p>
+								<button class="card__button">Выбрать</button>
+							</div>
+
+						</article>
+					</li>
+					<li class="pizza__item">
+						<article class="card">
+							<img class="card__image" src="img/pizza-img/pizza-margherita.png" alt="Маргарита">
+
+							<div class="card__content">
+								<h3 class="card__title">Маргарита</h3>
+								<p class="card__info">
+									<span class="card__price">480 ₽</span>
+									<span>/</span>
+									<span class="card__weight">25 см</span>
+								</p>
+								<button class="card__button">Выбрать</button>
+							</div>
+
+						</article>
+					</li>
+					<li class="pizza__item">
+						<article class="card">
+							<img class="card__image" src="img/pizza-img/pizza-margherita.png" alt="Маргарита">
+
+							<div class="card__content">
+								<h3 class="card__title">Маргарита</h3>
+								<p class="card__info">
+									<span class="card__price">480 ₽</span>
+									<span>/</span>
+									<span class="card__weight">25 см</span>
+								</p>
+								<button class="card__button">Выбрать</button>
+							</div>
+
+						</article>
+					</li>
+					<li class="pizza__item">
+						<article class="card">
+							<img class="card__image" src="img/pizza-img/pizza-margherita.png" alt="Маргарита">
+
+							<div class="card__content">
+								<h3 class="card__title">Маргарита</h3>
+								<p class="card__info">
+									<span class="card__price">480 ₽</span>
+									<span>/</span>
+									<span class="card__weight">25 см</span>
+								</p>
+								<button class="card__button">Выбрать</button>
+							</div>
+
+						</article>
+					</li>
+					<li class="pizza__item">
+						<article class="card">
+							<img class="card__image" src="img/pizza-img/pizza-margherita.png" alt="Маргарита">
+
+							<div class="card__content">
+								<h3 class="card__title">Маргарита</h3>
+								<p class="card__info">
+									<span class="card__price">480 ₽</span>
+									<span>/</span>
+									<span class="card__weight">25 см</span>
+								</p>
+								<button class="card__button">Выбрать</button>
+							</div>
+
+						</article>
+					</li>
+					<li class="pizza__item">
+						<article class="card">
+							<img class="card__image" src="img/pizza-img/pizza-margherita.png" alt="Маргарита">
+
+							<div class="card__content">
+								<h3 class="card__title">Маргарита</h3>
+								<p class="card__info">
+									<span class="card__price">480 ₽</span>
+									<span>/</span>
+									<span class="card__weight">25 см</span>
+								</p>
+								<button class="card__button">Выбрать</button>
+							</div>
+
+						</article>
+					</li>
+					<li class="pizza__item">
+						<article class="card">
+							<img class="card__image" src="img/pizza-img/pizza-margherita.png" alt="Маргарита">
+
+							<div class="card__content">
+								<h3 class="card__title">Маргарита</h3>
+								<p class="card__info">
+									<span class="card__price">480 ₽</span>
+									<span>/</span>
+									<span class="card__weight">25 см</span>
+								</p>
+								<button class="card__button">Выбрать</button>
+							</div>
+
+						</article>
+					</li>
+					<li class="pizza__item">
+						<article class="card">
+							<img class="card__image" src="img/pizza-img/pizza-margherita.png" alt="Маргарита">
+
+							<div class="card__content">
+								<h3 class="card__title">Маргарита</h3>
+								<p class="card__info">
+									<span class="card__price">480 ₽</span>
+									<span>/</span>
+									<span class="card__weight">25 см</span>
+								</p>
+								<button class="card__button">Выбрать</button>
+							</div>
+
+						</article>
+					</li>
+					<li class="pizza__item">
+						<article class="card">
+							<img class="card__image" src="img/pizza-img/pizza-margherita.png" alt="Маргарита">
+
+							<div class="card__content">
+								<h3 class="card__title">Маргарита</h3>
+								<p class="card__info">
+									<span class="card__price">480 ₽</span>
+									<span>/</span>
+									<span class="card__weight">25 см</span>
+								</p>
+								<button class="card__button">Выбрать</button>
+							</div>
+
+						</article>
+					</li> -->
+        </ul>
+      </div>
+    </section>
+
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <img src="img/logo-orange.svg" alt="Логотип GO GO Pizza" class="footer__logo">
+      <p class="footer__copyright">©go go pizza, 2024</p>
+      <ul class="footer__developers">
+        <li class="footer__developer">
+          <a href="#" class="footer__link" target="_blank" rel="noopener">Designer: Anastasia Ilina</a>
+        </li>
+        <li class="footer__developer">
+          <a href="#" class="footer__link" target="_blank" rel="noopener">Developer:Kuznecov Anton</a>
+        </li>
+      </ul>
+    </div>
+  </footer>
+
+  <div class="modal modal-pizza">
+    <div class="modal__main modal-pizza__main">
+      <img class="modal-pizza__img" src="img/pizza-img/Frame 7.png" alt="Пицца с грибами">
+      <h2 class="modal-pizza__title">С грибами</h2>
+      <p class="modal-pizza__toppings">Грибы, сыр, томатный соус, лук, болгарский перец</p>
+      <p class="modal-pizza__info">
+        <span class="modal-pizza__price">490 ₽</span>
+        <span>/</span>
+        <span class="modal-pizza__sm">25 см</span>
+      </p>
+      <form>
+        <div class="modal-pizza__group-fieldset">
+          <fieldset class="modal-pizza__fieldset">
+            <input class="modal-pizza__radio" type="radio" name="crust" value="think">
+            <label class="modal-pizza__label" name="crust" value="thin">Пышное тесто</label>
+
+            <input class="modal-pizza__radio" type="radio" name="crust" value="think" checked>
+            <label class="modal-pizza__label" name="crust" value="thin">Тонкое тесто</label>
+          </fieldset>
+
+          <fieldset class="modal-pizza__fieldset">
+            <input class="modal-pizza__radio" type="radio" name="size" value="25 cm" checked>
+            <label class="modal-pizza__label">25 см</label>
+
+            <input class="modal-pizza__radio" type="radio" name="size" value="30 cm">
+            <label class="modal-pizza__label">30 см</label>
+
+            <input class="modal-pizza__radio" type="radio" name="size" value="35 cm">
+            <label class="modal-pizza__label">35 см</label>
+          </fieldset>
+        </div>
+        <button class="modal-pizza__add-cart" type="button">В корзину</button>
+      </form>
+      <button class="modal__close">
+        <svg width="20.000000" height="20.000000" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink">
+          <rect id="close" width="20.000000" height="20.000000" fill="#FFFFFF" fill-opacity="0" />
+          <rect id="Rectangle 10" x="14.833252" y="4.000000" width="0.851136" height="15.320445"
+            transform="rotate(45 14.833252 4.000000)" fill="#C1AB91" fill-opacity="1.000000" />
+          <rect id="Rectangle 11" x="4.000000" y="4.601807" width="0.851136" height="15.320445"
+            transform="rotate(-45 4.000000 4.601807)" fill="#C1AB91" fill-opacity="1.000000" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</body>
+
+</html>
