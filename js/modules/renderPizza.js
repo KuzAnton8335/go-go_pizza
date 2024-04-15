@@ -1,6 +1,7 @@
 import { getData } from "./getData.js";
 // import { toppings } from "./toppings.js";
 import { modalController } from "./modalController.js";
+import { renderModalPizza } from "./renderModalPizza.js";
 
 const btnReset = document.createElement("button");
 btnReset.classList.add("pizza__reset-toppings");
@@ -53,8 +54,10 @@ export const renderPizza = async (toppings) => {
       modal: '.modal-pizza',
       btnOpen: ".card__button",
       btnClose: ".modal__close",
-      cbOpen(btnOpen) {
-        console.log(btnOpen.dataset.id);
+      async cbOpen(btnOpen) {
+        const pizza = await getData(`https://curly-melted-eclipse.glitch.me/api/products/${btnOpen.dataset.id}`);
+        renderModalPizza(pizza);
+        console.log(pizza);
       }
     })
   } else {
