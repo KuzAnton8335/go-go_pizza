@@ -53,6 +53,9 @@ export const renderPizza = async (toppings) => {
       modal: '.modal-pizza',
       btnOpen: ".card__button",
       btnClose: ".modal__close",
+      cbOpen(btnOpen) {
+        console.log(btnOpen.dataset.id);
+      }
     })
   } else {
     pizzaTitle.textContent = "Такой пиццы у нас нет :("
