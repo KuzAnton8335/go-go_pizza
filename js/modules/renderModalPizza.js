@@ -40,6 +40,7 @@ export const renderModalPizza = ({ id, images, name, price, toppings }) => {
   sizeElement.classList.add("modal-pizza__sm");
 
   priceSizeInfo.append(priceElement, slashElement, sizeElement);
+  // ?to-do продолжить веостать модальное окно для карточики пиццы....
 
 
   modalPizzaMain.append(picture, title, toppingElement, priceSizeInfo);
