@@ -1,3 +1,4 @@
+import { cartContorl } from "./cartControl.js";
 import { changefirstUppercase, createLabel, createRadioInput } from "./helpers.js";
 
 export const renderModalPizza = ({ id, images, name, price, toppings }) => {
@@ -41,10 +42,19 @@ export const renderModalPizza = ({ id, images, name, price, toppings }) => {
   const sizeElement = document.createElement('span');
   sizeElement.classList.add("modal-pizza__sm");
 
+  //функция вставки цены и размера пиццы
+  const updatePrice = () => {
+    const selectedSizeInput = form.querySelector('input[name="size"]:checked');
+    size = selectedSizeInput.value;
+    priceElement.textContent = `${price[size]} ₽`;
+    sizeElement.textContent = `${parseInt(size)} см`;
+  };
+
   priceSizeInfo.append(priceElement, slashElement, sizeElement);
 
   // create form - создание формы
   const form = document.createElement("form");
+  form.id = id;
   form.classList.add("modal-pizza__form");
 
   const groupFieldset = document.createElement("div");
@@ -65,63 +75,69 @@ export const renderModalPizza = ({ id, images, name, price, toppings }) => {
   const fieldsetSize = document.createElement("fieldset");
   fieldsetSize.classList.add("modal-pizza__fieldset");
 
+  // render при помощи Object.keys и forEach
   const sizeInputs = Object.keys(price).map(size => createRadioInput(size, "size", size, "modal-pizza__radio"));
-
   sizeInputs[0].checked = true;
   sizeInputs.forEach(input => {
     const label = createLabel("modal-pizza__label", input.id, `${input.value} см`);
-    fieldsetSize.append(input, label)
+    input.addEventListener('change', updatePrice)
+    fieldsetSize.append(input, label);
   })
 
   const addToCartBtn = document.createElement("button");
   addToCartBtn.classList.add("modal-pizza__add-cart");
-  addToCartBtn.textContent = "В корзину"
+  addToCartBtn.textContent = "В корзину";
 
   groupFieldset.append(fieldsetCrust, fieldsetSize);
 
   form.append(groupFieldset, addToCartBtn);
+  const closeBtn = document.createElement("button");
+  closeBtn.classList.add("modal__close");
+  closeBtn.innerHTML = `
+  <svg width="20.000000" height="20.000000" viewBox="0 0 20 20" fill="none"     xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink">
+   <rect id="close" width="20.000000" height="20.000000" fill="#FFFFFF" fill-opacity="0" />
+   <rect id="Rectangle 10" x="14.833252" y="4.000000" width="0.851136" height="15.320445"
+   transform="rotate(45 14.833252 4.000000)" fill="#C1AB91" fill-opacity="1.000000" />
+   <rect id="Rectangle 11" x="4.000000" y="4.601807" width="0.851136" height="15.320445"
+   transform="rotate(-45 4.000000 4.601807)" fill="#C1AB91" fill-opacity="1.000000" />
+ </svg>
+  `
+  modalPizzaMain.append(picture, title, toppingElement, priceSizeInfo, form, closeBtn);
 
-  modalPizzaMain.append(picture, title, toppingElement, priceSizeInfo, form);
+  updatePrice();
+
+  let timerId = NaN;
+  // функция добавления в корзину товара(пиццы)
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    // формирование хранилища для корзины
+    const formData = new FormData(form);
+
+    // формирование товара для карзины из input(html),присвоение для него id и cartId
+    const product = {
+      cartId: crypto.randomUUID(),
+      id,
+      crust: formData.get('crust'),
+      size: formData.get('size'),
+    }
+
+    // добавление товара в localStorage при помощи функции CartControl
+    cartContorl.addCart(product);
+
+    addToCartBtn.disabled = true;
+    addToCartBtn.textContent = "Добавлено";
+    // время выдержки кнопки в корзине
+    timerId = setTimeout(() => {
+      addToCartBtn.disabled = false;
+      addToCartBtn.textContent = "В козину";
+    }, 3000)
+  });
+
+  // функция что бы кнопка была "В корзину"
+  form.addEventListener("change", () => {
+    clearTimeout(timerId);
+    addToCartBtn.disabled = false;
+    addToCartBtn.textContent = "В козину";
+  });
 }
-/*
-   <!--
-
-   <p class="modal-pizza__info">
-    <span class="modal-pizza__price">490 ₽</span>
-    <span>/</span>
-    <span class="modal-pizza__sm">25 см</span>
-   </p>
-   <form>
-    <div class="modal-pizza__group-fieldset">
-     <fieldset class="modal-pizza__fieldset">
-      <input class="modal-pizza__radio" type="radio" name="crust" value="think">
-      <label class="modal-pizza__label" name="crust" value="thin">Пышное тесто</label>
-
-      <input class="modal-pizza__radio" type="radio" name="crust" value="thin" checked>
-      <label class="modal-pizza__label" name="crust" value="thin">Тонкое тесто</label>
-     </fieldset>
-
-     <fieldset class="modal-pizza__fieldset">
-      <input class="modal-pizza__radio" type="radio" name="size" value="25 cm" checked>
-      <label class="modal-pizza__label">25 см</label>
-
-      <input class="modal-pizza__radio" type="radio" name="size" value="30 cm">
-      <label class="modal-pizza__label">30 см</label>
-
-      <input class="modal-pizza__radio" type="radio" name="size" value="35 cm">
-      <label class="modal-pizza__label">35 см</label>
-     </fieldset>
-    </div>
-    <button class="modal-pizza__add-cart" type="button">В корзину</button>
-   </form>
-   <button class="modal__close">
-    <svg width="20.000000" height="20.000000" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
-     xmlns:xlink="http://www.w3.org/1999/xlink">
-     <rect id="close" width="20.000000" height="20.000000" fill="#FFFFFF" fill-opacity="0" />
-     <rect id="Rectangle 10" x="14.833252" y="4.000000" width="0.851136" height="15.320445"
-      transform="rotate(45 14.833252 4.000000)" fill="#C1AB91" fill-opacity="1.000000" />
-     <rect id="Rectangle 11" x="4.000000" y="4.601807" width="0.851136" height="15.320445"
-      transform="rotate(-45 4.000000 4.601807)" fill="#C1AB91" fill-opacity="1.000000" />
-    </svg>
-   </button>
- */

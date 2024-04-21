@@ -1,7 +1,9 @@
+// функция создания заглавной буквы у строки
 export const changefirstUppercase = (str) => {
   return str[0].toUpperCase() + str.slice(1).toLowerCase();
 }
 
+// функция создания radio кнопок и label блока
 export const createRadioInput = (id, name, value, className) => {
   const input = document.createElement("input");
   input.type = "radio";

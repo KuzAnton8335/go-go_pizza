@@ -108,9 +108,6 @@ iframe {
   }
 }
 
-@media (width >=860px) {
-}
-
 @media (width >=1140px) {
   .container {
     --offset-container: 70px;
