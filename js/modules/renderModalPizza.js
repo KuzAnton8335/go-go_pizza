@@ -1,4 +1,5 @@
-import { changefirstUppercase } from "./helpers.js";
+import { changefirstUppercase, createLabel, createRadioInput } from "./helpers.js";
+
 export const renderModalPizza = ({ id, images, name, price, toppings }) => {
   const modalPizzaMain = document.querySelector('.modal-pizza__main');
   modalPizzaMain.textContent = '';
@@ -42,6 +43,7 @@ export const renderModalPizza = ({ id, images, name, price, toppings }) => {
 
   priceSizeInfo.append(priceElement, slashElement, sizeElement);
 
+  // create form - создание формы
   const form = document.createElement("form");
   form.classList.add("modal-pizza__form");
 
@@ -51,10 +53,25 @@ export const renderModalPizza = ({ id, images, name, price, toppings }) => {
   const fieldsetCrust = document.createElement("fieldset");
   fieldsetCrust.classList.add("modal-pizza__fieldset");
 
+  const thickInput = createRadioInput("thick", "crust", "thick", "modal-pizza__radio");
+  thickInput.checked = true;
+  const thickLabel = createLabel("modal-pizza__label", "thick", "Пышное тесто");
+
+  const thinInput = createRadioInput("thin", "crust", "thin", "modal-pizza__radio");
+  const thinLabel = createLabel("modal-pizza__label", "thin", "Тонкое тесто");
+
+  fieldsetCrust.append(thickInput, thickLabel, thinInput, thinLabel)
+
   const fieldsetSize = document.createElement("fieldset");
   fieldsetSize.classList.add("modal-pizza__fieldset");
 
+  const sizeInputs = Object.keys(price).map(size => createRadioInput(size, "size", size, "modal-pizza__radio"));
 
+  sizeInputs[0].checked = true;
+  sizeInputs.forEach(input => {
+    const label = createLabel("modal-pizza__label", input.id, `${input.value} см`);
+    fieldsetSize.append(input, label)
+  })
 
   const addToCartBtn = document.createElement("button");
   addToCartBtn.classList.add("modal-pizza__add-cart");
@@ -67,44 +84,44 @@ export const renderModalPizza = ({ id, images, name, price, toppings }) => {
   modalPizzaMain.append(picture, title, toppingElement, priceSizeInfo, form);
 }
 /*
-    <!--
+   <!--
 
-    <p class="modal-pizza__info">
-      <span class="modal-pizza__price">490 ₽</span>
-      <span>/</span>
-      <span class="modal-pizza__sm">25 см</span>
-    </p>
-    <form>
-      <div class="modal-pizza__group-fieldset">
-       <fieldset class="modal-pizza__fieldset">
-        <input class="modal-pizza__radio" type="radio" name="crust" value="think">
-        <label class="modal-pizza__label" name="crust" value="thin">Пышное тесто</label>
+   <p class="modal-pizza__info">
+    <span class="modal-pizza__price">490 ₽</span>
+    <span>/</span>
+    <span class="modal-pizza__sm">25 см</span>
+   </p>
+   <form>
+    <div class="modal-pizza__group-fieldset">
+     <fieldset class="modal-pizza__fieldset">
+      <input class="modal-pizza__radio" type="radio" name="crust" value="think">
+      <label class="modal-pizza__label" name="crust" value="thin">Пышное тесто</label>
 
-        <input class="modal-pizza__radio" type="radio" name="crust" value="think" checked>
-        <label class="modal-pizza__label" name="crust" value="thin">Тонкое тесто</label>
-       </fieldset>
+      <input class="modal-pizza__radio" type="radio" name="crust" value="thin" checked>
+      <label class="modal-pizza__label" name="crust" value="thin">Тонкое тесто</label>
+     </fieldset>
 
-       <fieldset class="modal-pizza__fieldset">
-        <input class="modal-pizza__radio" type="radio" name="size" value="25 cm" checked>
-        <label class="modal-pizza__label">25 см</label>
+     <fieldset class="modal-pizza__fieldset">
+      <input class="modal-pizza__radio" type="radio" name="size" value="25 cm" checked>
+      <label class="modal-pizza__label">25 см</label>
 
-        <input class="modal-pizza__radio" type="radio" name="size" value="30 cm">
-        <label class="modal-pizza__label">30 см</label>
+      <input class="modal-pizza__radio" type="radio" name="size" value="30 cm">
+      <label class="modal-pizza__label">30 см</label>
 
-        <input class="modal-pizza__radio" type="radio" name="size" value="35 cm">
-        <label class="modal-pizza__label">35 см</label>
-       </fieldset>
-      </div>
-      <button class="modal-pizza__add-cart" type="button">В корзину</button>
-    </form>
-    <button class="modal__close">
-      <svg width="20.000000" height="20.000000" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
-       xmlns:xlink="http://www.w3.org/1999/xlink">
-       <rect id="close" width="20.000000" height="20.000000" fill="#FFFFFF" fill-opacity="0" />
-       <rect id="Rectangle 10" x="14.833252" y="4.000000" width="0.851136" height="15.320445"
-        transform="rotate(45 14.833252 4.000000)" fill="#C1AB91" fill-opacity="1.000000" />
-       <rect id="Rectangle 11" x="4.000000" y="4.601807" width="0.851136" height="15.320445"
-        transform="rotate(-45 4.000000 4.601807)" fill="#C1AB91" fill-opacity="1.000000" />
-      </svg>
-    </button>
+      <input class="modal-pizza__radio" type="radio" name="size" value="35 cm">
+      <label class="modal-pizza__label">35 см</label>
+     </fieldset>
+    </div>
+    <button class="modal-pizza__add-cart" type="button">В корзину</button>
+   </form>
+   <button class="modal__close">
+    <svg width="20.000000" height="20.000000" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+     <rect id="close" width="20.000000" height="20.000000" fill="#FFFFFF" fill-opacity="0" />
+     <rect id="Rectangle 10" x="14.833252" y="4.000000" width="0.851136" height="15.320445"
+      transform="rotate(45 14.833252 4.000000)" fill="#C1AB91" fill-opacity="1.000000" />
+     <rect id="Rectangle 11" x="4.000000" y="4.601807" width="0.851136" height="15.320445"
+      transform="rotate(-45 4.000000 4.601807)" fill="#C1AB91" fill-opacity="1.000000" />
+    </svg>
+   </button>
  */
