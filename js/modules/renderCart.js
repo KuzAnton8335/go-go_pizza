@@ -1,5 +1,6 @@
 import { cartContorl } from "./cartControl.js";
 import { getData } from "./getData.js";
+import { changefirstUppercase } from "./helpers.js";
 
 export const renderCart = () => {
   const cartListElem = document.querySelector(".modal-cart__list");
@@ -7,6 +8,9 @@ export const renderCart = () => {
   const nextBtn = document.querySelector(".modal-cart__continue");
   const prevBtn = document.querySelector(".modal-cart__prev");
   const submitBtn = document.querySelector(".modal-cart__send-order");
+  const CartBlockElem = document.querySelector(".modal-cart__block")
+  const CartDeliveryElem = document.querySelector(".modal-cart__delivery");
+  const cartForm = document.querySelector(".modal-cart__form");
 
   // функция формирования списка корзины
   const renderCartList = async () => {
@@ -24,25 +28,25 @@ export const renderCart = () => {
         //получение данных из localStorage(data)
         //получение индекса данных(i)
         const item = cartContorl.cartData[i];
-
+        // формирование карты (список li)
         const cardCart = document.createElement("li");
         cardCart.classList.add("modal-cart__item");
         cardCart.innerHTML = `
         <picture>
-        <source srcset="http://go-go-pizza-api.onrender.com/img/pepperoni.webp" type="image/webp">
-        <img class="modal-cart__image" src="img/pizza-hawaiana.png" width="63" height="63"
-          alt="С курицей терияки">
+        <source srcset="${data.images[1]}" type="image/webp">
+        <img class="modal-cart__image" src="${data.images[0]}" width="63" height="63"
+          alt="${data.name.ru}">
       </picture>
 
       <div class="modal-cart__content">
-        <h3 class="modal-cart__title-pizza">С курицей терияки</h3>
+        <h3 class="modal-cart__title-pizza">${changefirstUppercase(data.name.ru)}</h3>
         <p class="modal-cart__info-pizza">
-          <span class="modal-cart__price-pizza">480 ₽</span>
+          <span class="modal-cart__price-pizza">${data.price[item.size]} ₽</span>
           <span>/</span>
-          <span class="modal-cart__weight-pizza">25 см</span>
+          <span class="modal-cart__weight-pizza">${parseInt(item.size)}</span>
         </p>
       </div>
-      <button class="modal-cart__delete-button" data-id="8">
+      <button class="modal-cart__delete-button" data-id="${item.cartId}">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M11.4549 4.01401C11.3985 4.00992 11.3805 4.01242 11.3579 3.99904L11.3522 3.43064C11.2979 3.41032 11.2015 3.42189 11.1407 3.42189L8.70136 3.42086V4.01348L7.73452 4.01392L7.73349 3.00582C7.73333 2.72455 7.65345 2.33685 8.03552 2.29858L11.7298 2.30315C12.0624 2.30324 12.3344 2.23977 12.3353 2.69883L12.3345 4.01423L11.4549 4.01401Z"
@@ -53,14 +57,69 @@ export const renderCart = () => {
         </svg>
       </button>
         `;
+        // добавление стоимости в цену(price)
+        totalPrice += data.price[item.size];
         return cardCart;
       })
       cartListElem.append(...cartsCart);
+
     } else {
-      cartListElem.textContent = `<li>Корзина пуста...</li>`;// сообщение корзина пуста
+      cartListElem.textContent = 'Корзина пуста...';// сообщение корзина пуста
       nextBtn.disabled = true;// выключение кнопки "Далее";
     }
-
+    // расчет цены (всех пицц в окне) и вывод в конце окна.
+    cartPriceElem.forEach(elem => elem.textContent = `${totalPrice} ₽`)
   }
   renderCartList();
+
+  // функция очистки модального окна корзины по клику на кнопку "Удалить"
+  cartListElem.addEventListener('click', (e) => {
+    const deleteButton = e.target.closest('.modal-cart__delete-button');
+    if (deleteButton) {
+      const cartId = deleteButton.dataset.id;
+      cartContorl.removeCart(cartId);
+      renderCartList();
+    }
+  });
+  // функция перехода на форму заказа  модального окна корзины по клику на кнопку "Далее"
+  nextBtn.addEventListener('click', () => {
+    CartBlockElem.style.display = 'none';
+    CartDeliveryElem.style.display = 'block';
+  })
+
+  prevBtn.addEventListener('click', () => {
+    CartBlockElem.style.display = 'block';
+    CartDeliveryElem.style.display = 'none';
+  })
+
+  // функция добавления данных из формы модального окна на сервер
+  cartForm.addEventListener('submint', async (e) => {
+    e.preventDefault();
+    // формирование данных
+    const formData = new FormData(cartForm);
+    const data = Object.fromEntries(formData);
+    data.pizzas = cartContorl.cartData;
+    // обработка ошибок при отправке данных на сервер
+    try {
+      const respons = await fetch(`https://curly-melted-eclipse.glitch.me/api/orders`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+      })
+      if (!respons.ok) {
+        throw new Error('Ошибка при отправке данных');
+      }
+      const order = await respons.json();
+      cartContorl.clearCart();
+      cartForm.innerHTML = `
+      <h3>Заказ оформлен, номер заказа ${order.orderId}</h3>
+      `;
+      [nextBtn, prevBtn, submitBtn].forEach((btn) => btn.disabled.true);
+
+    } catch (err) {
+      console.error(`Error submiting order:${err}`);
+    }
+  })
 }
