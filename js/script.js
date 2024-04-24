@@ -1,5 +1,5 @@
+import { modalCartController } from "./modules/modalCartCotroller.js";
 import { modalController } from "./modules/modalController.js";
-import { renderCart } from "./modules/renderCart.js";
 import { renderPizza } from "./modules/renderPizza.js";
 import { renderToppings } from "./modules/renderToppings.js";
 import { toppingToggle } from "./modules/toppingToggle.js";
@@ -14,7 +14,17 @@ const init = () => {
     btnOpen: ".header__cart",
     btnClose: ".modal__close",
     cbOpen() {
-      renderCart();
+      modalCartController();
+    }
+  });
+
+  // Добавление кнопки Заказать (.hero__order)
+  modalController({
+    modal: ".modal-cart",
+    btnOpen: ".hero__order",
+    btnClose: ".modal__close",
+    cbOpen() {
+      modalCartController();
     }
   });
 }
